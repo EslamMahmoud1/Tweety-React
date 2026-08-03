@@ -1,42 +1,152 @@
+import { Link as RouterLink } from "react-router-dom";
+import {
+  Box,
+  Button,
+  Divider,
+  Link,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
+import axios from "axios";
+
+const cardStyles = {
+  width: "100%",
+  p: { xs: 3, sm: 4 },
+  borderRadius: "14px",
+  border: "1px solid #e2e8f0",
+  boxShadow: "0 20px 50px rgba(15, 23, 42, 0.1)",
+};
+
+const inputStyles = {
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "10px",
+    backgroundColor: "#ffffff",
+    transition: "box-shadow 180ms ease",
+    "&:hover fieldset": {
+      borderColor: "#94a3b8",
+    },
+    "&.Mui-focused": {
+      boxShadow: "0 0 0 4px rgba(37, 99, 235, 0.12)",
+    },
+  },
+};
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Login submitted:", { email, password });
-    // Add real authentication logic here
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent page reload
+    try {
+      const response = await axios.post(
+        "https://localhost:7188/api/auth/login",
+        {
+          email,
+          password,
+        },
+      );
+      console.log("Login successful:", response.data);
+      localStorage.setItem("token", response.data.token);
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
   };
 
   return (
-    <div className="login-form-container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit} className="login-form">
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="you@example.com"
-          required
-        />
+    <Paper component="section" elevation={0} sx={cardStyles}>
+      <Box component="form" onSubmit={handleSubmit} noValidate>
+        <Stack spacing={3}>
+          <Stack spacing={1}>
+            <Typography
+              component="h1"
+              sx={{
+                m: 0,
+                color: "#111827",
+                fontSize: { xs: "1.75rem", sm: "2rem" },
+                fontWeight: 700,
+                lineHeight: 1.2,
+              }}
+            >
+              Sign in
+            </Typography>
+            <Typography sx={{ color: "#64748b", fontSize: "0.98rem" }}>
+              Access your Tweety account.
+            </Typography>
+          </Stack>
 
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          placeholder="Enter your password"
-          required
-        />
+          <Stack spacing={2}>
+            <TextField
+              id="email"
+              label="Email address"
+              name="email"
+              type="email"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              autoComplete="email"
+              fullWidth
+              required
+              sx={inputStyles}
+            />
 
-        <button type="submit">Sign In</button>
-      </form>
-    </div>
+            <TextField
+              id="password"
+              label="Password"
+              name="password"
+              type="password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              autoComplete="current-password"
+              fullWidth
+              required
+              sx={inputStyles}
+            />
+          </Stack>
+
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            fullWidth
+            sx={{
+              py: 1.25,
+              borderRadius: "10px",
+              backgroundColor: "#111827",
+              boxShadow: "0 12px 30px rgba(15, 23, 42, 0.16)",
+              fontWeight: 700,
+              textTransform: "none",
+              transition:
+                "background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease",
+              "&:hover": {
+                backgroundColor: "#2563eb",
+                boxShadow: "0 16px 34px rgba(37, 99, 235, 0.22)",
+                transform: "translateY(-1px)",
+              },
+            }}
+          >
+            Sign in
+          </Button>
+
+          <Divider sx={{ borderColor: "#e2e8f0" }} />
+
+          <Typography sx={{ color: "#64748b", textAlign: "center" }}>
+            New to Tweety?{" "}
+            <Link
+              component={RouterLink}
+              to="/register"
+              underline="hover"
+              sx={{ color: "#2563eb", fontWeight: 700 }}
+            >
+              Create an account
+            </Link>
+          </Typography>
+        </Stack>
+      </Box>
+    </Paper>
   );
 };
 

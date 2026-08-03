@@ -18,7 +18,7 @@ const MainHeader = () => {
             to="/login"
             className="main-layout__auth-link main-layout__auth-link--primary"
           >
-            Login
+            Sign In
           </NavLink>
           <NavLink
             to="/register"
