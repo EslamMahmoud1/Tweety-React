@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import "../HeaderFooter.css";
 
 const AuthHeader = () => {
   return (
@@ -7,6 +8,7 @@ const AuthHeader = () => {
         <NavLink to="/" className="main-layout__brand" aria-label="Tweety home">
           Tweety
         </NavLink>
+        <div className="main-layout__actions" aria-hidden="true" />
       </div>
     </header>
   );

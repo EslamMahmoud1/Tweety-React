@@ -1,0 +1,181 @@
+:root {
+  --layout-color-bg: #f8fafc;
+  --layout-color-surface: #ffffff;
+  --layout-color-surface-muted: #f1f5f9;
+  --layout-color-text: #111827;
+  --layout-color-text-muted: #64748b;
+  --layout-color-border: #e2e8f0;
+  --layout-color-accent: #2563eb;
+  --layout-shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.08);
+  --layout-radius-sm: 8px;
+  --layout-radius-md: 12px;
+  --layout-space-xs: 0.5rem;
+  --layout-space-sm: 0.75rem;
+  --layout-space-md: 1rem;
+  --layout-space-lg: 1.5rem;
+  --layout-space-xl: 2rem;
+  --layout-space-2xl: 3rem;
+  --layout-container: 1180px;
+  --layout-header-height: 72px;
+}
+
+.main-layout {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--layout-color-bg);
+  color: var(--layout-color-text);
+}
+
+.main-layout__header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 20;
+  height: var(--layout-header-height);
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid var(--layout-color-border);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  backdrop-filter: blur(12px);
+}
+
+.main-layout__header-inner {
+  width: min(100% - 2rem, var(--layout-container));
+  height: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--layout-space-lg);
+}
+
+.main-layout__brand,
+.main-layout__nav a,
+.main-layout__auth-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.main-layout__brand {
+  justify-self: start;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.main-layout__nav {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: var(--layout-space-xs);
+  padding: 0.35rem;
+  background: var(--layout-color-surface-muted);
+  border: 1px solid var(--layout-color-border);
+  border-radius: var(--layout-radius-md);
+}
+
+.main-layout__nav a,
+.main-layout__auth-link {
+  padding: 0.55rem 0.8rem;
+  border-radius: var(--layout-radius-sm);
+  color: var(--layout-color-text-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.main-layout__nav a:hover,
+.main-layout__nav a.active,
+.main-layout__auth-link:hover,
+.main-layout__auth-link.active {
+  background: var(--layout-color-surface);
+  color: var(--layout-color-text);
+}
+
+.main-layout__actions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: var(--layout-space-xs);
+}
+
+.main-layout__auth-link--primary {
+  background: var(--layout-color-text);
+  color: var(--layout-color-surface);
+  box-shadow: var(--layout-shadow-soft);
+}
+
+.main-layout__auth-link--primary:hover,
+.main-layout__auth-link--primary.active {
+  background: var(--layout-color-accent);
+  color: var(--layout-color-surface);
+  transform: translateY(-1px);
+}
+
+.main-layout__main {
+  flex: 1;
+  padding: calc(var(--layout-header-height) + var(--layout-space-2xl))
+    var(--layout-space-md) var(--layout-space-2xl);
+}
+
+.main-layout__container {
+  width: min(100%, var(--layout-container));
+  margin: 0 auto;
+  text-align: left;
+}
+
+.main-layout__container--narrow {
+  max-width: 520px;
+}
+
+.main-layout__footer {
+  padding: var(--layout-space-lg) var(--layout-space-md);
+  background: var(--layout-color-surface-muted);
+  border-top: 1px solid var(--layout-color-border);
+  color: var(--layout-color-text-muted);
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --layout-header-height: 112px;
+  }
+
+  .main-layout__header-inner {
+    width: min(100% - 1rem, var(--layout-container));
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "brand actions"
+      "nav nav";
+    gap: var(--layout-space-sm);
+    padding: var(--layout-space-sm) 0;
+  }
+
+  .main-layout__brand {
+    grid-area: brand;
+  }
+
+  .main-layout__actions {
+    grid-area: actions;
+  }
+
+  .main-layout__nav {
+    grid-area: nav;
+    width: 100%;
+    justify-content: center;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 460px) {
+  .main-layout__nav {
+    justify-content: flex-start;
+  }
+
+  .main-layout__nav a,
+  .main-layout__auth-link {
+    min-width: max-content;
+    text-align: center;
+  }
+}

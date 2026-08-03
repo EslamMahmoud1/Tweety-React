@@ -4,9 +4,13 @@ import Footer from "./Components/Footer/Footer";
 
 const App = () => {
   return (
-    <div>
+    <div className="main-layout">
       <MainHeader />
-      <Outlet />
+      <main className="main-layout__main">
+        <div className="main-layout__container">
+          <Outlet />
+        </div>
+      </main>
       <Footer />
     </div>
   );

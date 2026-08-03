@@ -1,3 +1,5 @@
+import "../Header/HeaderFooter.css";
+
 const Footer = () => {
   return (
     <footer className="main-layout__footer">

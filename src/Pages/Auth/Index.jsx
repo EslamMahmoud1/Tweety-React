@@ -4,9 +4,13 @@ import Footer from "../../Components/Footer/Footer";
 
 const Index = () => {
   return (
-    <div>
+    <div className="main-layout">
       <AuthHeader />
-      <Outlet />
+      <main className="main-layout__main">
+        <div className="main-layout__container main-layout__container--narrow">
+          <Outlet />
+        </div>
+      </main>
       <Footer />
     </div>
   );
